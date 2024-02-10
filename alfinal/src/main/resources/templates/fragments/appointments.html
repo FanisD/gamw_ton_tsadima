@@ -1,0 +1,42 @@
+<appointments>
+    <div th:if="${ not#lists.isEmpty(appointments)}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Title</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="appointment : ${appointments}">
+                <td th:text="${appointment.title}"></td>
+                <td th:if="${appointment.id}"><a class="btn btn-info" th:href="@{/appointment/{id}(id=${appointment.id})}">Edit</a>
+                    <button type="button" class="btn btn-danger" th:id="${appointment.id}"
+                            name="deleteAppointment"><i class="remove user icon"></i>
+                        Delete</button>
+                    <a class="btn btn-primary" th:href="@{/request/appointment/{id}(id=${appointment.id})}">Requests in the list</a>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${ #lists.isEmpty(appointments)}">
+        No Appointments found!
+    </div>
+    <a href="/appointment/new" class="btn btn-primary" role="button">Create new Appointment</a>
+    <script type="text/javascript">
+        $("[name='deleteAppointment']").click(function() {
+            var urlCall = "/appointment/";
+            $.ajax({
+                url : urlCall + $(this).attr('id'),
+                type : 'DELETE',
+                success : function(result) {
+                    console.log(result);
+                    $(location).attr("href", value="/appointment");
+                },
+                error : function(result) {
+                    console.log(result);
+                },
+            });
+        });
+    </script>
+
+</appointments>

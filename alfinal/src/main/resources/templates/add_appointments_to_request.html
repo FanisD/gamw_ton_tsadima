@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="fragments/header :: header"></head>
+
+<body>
+<!-- Include the header fragment -->
+<div th:insert="fragments/menu :: menu"></div>
+<main>
+    <div class="container" >
+        <h4 th:inline="text">
+
+        </h4>
+        <div th:if="${ not#lists.isEmpty(appointments)}">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="appointment : ${appointments}">
+                    <td th:text="${appointment.title}"></td>
+                    <td th:if="${appointment.id}">
+                        <button type="button" class="btn btn-info" th:appointment_id="${appointment.id}" th:request_id="${request.id}"
+                                name="enrollAppointment"><i class="remove user icon"></i>
+                            Enroll</button>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<!-- Include the footer fragment -->
+<div th:replace="fragments/footer :: footer"></div>
+<script type="text/javascript">
+    $("[name='enrollAppointment']").click(function() {
+        var urlCall = "/request/appointments/";
+        var ur1= urlCall + $(this).attr('request_id') + "/" + $(this).attr('appointment_id');
+        console.log(ur1);
+        console.log($(this).attr('request_id'));
+        console.log($(this).attr('appointment_id'));
+        $.ajax({
+            url : urlCall + $(this).attr('request_id') + "/" + $(this).attr('appointment_id'),
+            type : 'POST',
+            success : function(result) {
+                console.log(result);
+                window.location.reload();
+            },
+            error : function(result) {
+                console.log(result);
+            },
+        });
+    });
+</script>
+</body>
+</html>

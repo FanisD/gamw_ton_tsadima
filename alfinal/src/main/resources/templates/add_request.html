@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="fragments/header :: header"></head>
+
+<body>
+<!-- Include the header fragment -->
+<div th:insert="fragments/menu :: menu"></div>
+<main>
+    <div class="container" >
+        <form action="#" th:action="@{/request/new}" th:object="${request}"
+              method="post">
+
+            <div class="form-group">
+                <input type="hidden" id="id" class="form-control" th:field="*{id}">
+            </div>
+
+
+            <div class="form-group">
+                <label for="appointmentDate">Date</label>
+                <input type="text" id="appointmentDate" class="form-control" th:field="*{appointmentDate}">
+            </div>
+
+            <div class="form-group">
+                <label for="living_area">Living Area</label>
+                <input type="text" id="living_area" class="form-control" th:field="*{living_area}">
+            </div>
+
+            <div class="form-group">
+                <label for="blood_type">Blood Type</label>
+                <input type="text" id="blood_type" class="form-control" th:field="*{blood_type}">
+            </div>
+
+            <div class="form-group">
+                <label for="last_blood_test">Last Blood Test</label>
+                <input type="text" id="last_blood_test" class="form-control" th:field="*{last_blood_test}">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+
+<!-- Include the footer fragment -->
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
